@@ -3,7 +3,7 @@ import pygame, os, sys
 pygame.init()
 
 all_sprites = pygame.sprite.Group()
-size = HEIGHT, WIDTH = 550, 550
+size = HEIGHT, WIDTH = 700, 700
 STEP = 50
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Перемещение героя')
@@ -38,7 +38,11 @@ tile_images = {
     'box': load_image('box.png'),
     'earth': load_image('earth.png'),
     'end': load_image('end.png'),
-    'trap': load_image('trap.png')
+    'trap': load_image('trap.png'),
+    'arrow_l': load_image('arrow_l.png'),
+    'arrow_r': load_image('arrow_r.png'),
+    'arrow_b': load_image('arrow_b.png'),
+    'arrow_t': load_image('arrow_t.png')
 }
 player_image = load_image('rabbit.png')
 
@@ -88,6 +92,18 @@ def generate_level(level):
             elif level[y][x] == '/':
                 Tile('earth', x, y)
                 Tile('trap', x, y)
+            elif level[y][x] == '<':
+                Tile('earth', x, y)
+                Tile('arrow_l', x, y)
+            elif level[y][x] == '>':
+                Tile('earth', x, y)
+                Tile('arrow_r', x, y)
+            elif level[y][x] == '(':
+                Tile('earth', x, y)
+                Tile('arrow_b', x, y)
+            elif level[y][x] == ')':
+                Tile('earth', x, y)
+                Tile('arrow_t', x, y)
     # вернем игрока, а также размер поля в клетках
     return new_player, x, y
 
@@ -152,7 +168,7 @@ def start_screen():
         clock.tick(FPS)
 
 
-player, level_x, level_y = generate_level(load_level('leval_3.txt'))
+player, level_x, level_y = generate_level(load_level('leval_11.txt'))
 camera = Camera()
 start_screen()
 
