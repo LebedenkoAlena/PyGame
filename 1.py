@@ -208,7 +208,7 @@ def start_screen():
         clock.tick(FPS)
 
 
-player, level_x, level_y = generate_level(load_level('leval_22.txt'))
+player, level_x, level_y = generate_level(load_level('leval_23.txt'))
 camera = Camera()
 start_screen()
 
