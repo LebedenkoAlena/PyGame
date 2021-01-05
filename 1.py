@@ -38,11 +38,21 @@ tile_images = {
     'box': load_image('box.png'),
     'earth': load_image('earth.png'),
     'end': load_image('end.png'),
-    'trap': load_image('trap.png'),
+    'trap': load_image('trap1.png'),
     'arrow_l': load_image('arrow_l.png'),
     'arrow_r': load_image('arrow_r.png'),
     'arrow_b': load_image('arrow_b.png'),
-    'arrow_t': load_image('arrow_t.png')
+    'arrow_t': load_image('arrow_t.png'),
+    'most=': load_image('most=.png'),
+    'most': load_image('most.png'),
+    '1': load_image('1.png'),
+    '2': load_image('2.png'),
+    '3': load_image('3.png'),
+    '4': load_image('4.png'),
+    'button_no': load_image('button_no.png'),
+    'button_yes': load_image('button_yes.png'),
+    'lock': load_image('lock.png'),
+    'key': load_image('key.png'),
 }
 player_image = load_image('rabbit.png')
 
@@ -104,6 +114,36 @@ def generate_level(level):
             elif level[y][x] == ')':
                 Tile('earth', x, y)
                 Tile('arrow_t', x, y)
+            elif level[y][x] == '-':
+                Tile('earth', x, y)
+                Tile('most=', x, y)
+            elif level[y][x] == '*':
+                Tile('earth', x, y)
+                Tile('most', x, y)
+            elif level[y][x] == '1':
+                Tile('earth', x, y)
+                Tile('1', x, y)
+            elif level[y][x] == '2':
+                Tile('earth', x, y)
+                Tile('2', x, y)
+            elif level[y][x] == '3':
+                Tile('earth', x, y)
+                Tile('3', x, y)
+            elif level[y][x] == '4':
+                Tile('earth', x, y)
+                Tile('4', x, y)
+            elif level[y][x] == '8':
+                Tile('earth', x, y)
+                Tile('button_no', x, y)
+            elif level[y][x] == '5':
+                Tile('earth', x, y)
+                Tile('button_yes', x, y)
+            elif level[y][x] == '%':
+                Tile('earth', x, y)
+                Tile('lock', x, y)
+            elif level[y][x] == '!':
+                Tile('earth', x, y)
+                Tile('key', x, y)
     # вернем игрока, а также размер поля в клетках
     return new_player, x, y
 
@@ -168,7 +208,7 @@ def start_screen():
         clock.tick(FPS)
 
 
-player, level_x, level_y = generate_level(load_level('leval_11.txt'))
+player, level_x, level_y = generate_level(load_level('leval_22.txt'))
 camera = Camera()
 start_screen()
 
