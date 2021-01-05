@@ -34,9 +34,11 @@ def terminate():
 
 
 tile_images = {
-    'wall': load_image('carrot.png'),
-    'empty': load_image('grass.png'),
-    'earth': load_image('earth.png')
+    'carrot': load_image('carrot.png'),
+    'box': load_image('box.png'),
+    'earth': load_image('earth.png'),
+    'end': load_image('end.png'),
+    'trap': load_image('trap.png')
 }
 player_image = load_image('rabbit.png')
 
@@ -63,7 +65,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__(player_group, all_sprites)
         self.image = player_image
         self.rect = self.image.get_rect().move(
-            tile_width * pos_x - 14, tile_height * pos_y + 25)
+            tile_width * pos_x - 14, tile_height * pos_y - 25)
 
 
 def generate_level(level):
@@ -71,13 +73,21 @@ def generate_level(level):
     for y in range(len(level)):
         for x in range(len(level[y])):
             if level[y][x] == '.':
-                Tile('empty', x, y)
-            elif level[y][x] == '#':
                 Tile('earth', x, y)
-                Tile('wall', x, y)
+            elif level[y][x] == '#':
+                Tile('box', x, y)
             elif level[y][x] == '@':
-                Tile('empty', x, y)
+                Tile('earth', x, y)
                 new_player = Player(x, y)
+            elif level[y][x] == '$':
+                Tile('earth', x, y)
+                Tile('end', x, y)
+            elif level[y][x] == 'm':
+                Tile('earth', x, y)
+                Tile('carrot', x, y)
+            elif level[y][x] == '/':
+                Tile('earth', x, y)
+                Tile('trap', x, y)
     # вернем игрока, а также размер поля в клетках
     return new_player, x, y
 
@@ -142,7 +152,7 @@ def start_screen():
         clock.tick(FPS)
 
 
-player, level_x, level_y = generate_level(load_level('levalx.txt'))
+player, level_x, level_y = generate_level(load_level('leval_3.txt'))
 camera = Camera()
 start_screen()
 
@@ -165,7 +175,8 @@ while running:
     for sprite in all_sprites:
         camera.apply(sprite)
 
-    screen.fill('white')
+    fon = pygame.transform.scale(load_image('grass.jpg'), (WIDTH, HEIGHT))
+    screen.blit(fon, (0, 0))
     tiles_group.draw(screen)
     player_group.draw(screen)
 
