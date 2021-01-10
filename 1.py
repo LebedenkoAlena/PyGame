@@ -208,24 +208,52 @@ def start_screen():
         clock.tick(FPS)
 
 
+def get_coords(level):
+    for y in range(len(level)):
+        for x in range(len(level[y])):
+            if level[y][x] == '@':
+                return int(x), int(y)
+
+
+def moving(direction, level, x, y):
+    logic = True
+    if direction == 'right' and level[y][x + 1] == '#' \
+            or direction == 'left' and level[y][x - 1] == '#' \
+            or direction == 'down' and level[y + 1][x] == '#' \
+            or direction == 'up' and level[y - 1][x] == '#':
+        logic = False
+    return logic
+
+
+level = load_level('leval_23.txt')
 player, level_x, level_y = generate_level(load_level('leval_23.txt'))
 camera = Camera()
 start_screen()
 
 running = True
+x, y = get_coords(level)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                player.rect.x -= STEP
+                if moving('left', level, x, y):
+                    player.rect.x -= STEP
+                    x -= 1
             if event.key == pygame.K_RIGHT:
-                player.rect.x += STEP
+                if moving('right', level, x, y):
+                    player.rect.x += STEP
+                    x += 1
             if event.key == pygame.K_UP:
-                player.rect.y -= STEP
+                if moving('up', level, x, y):
+                    player.rect.y -= STEP
+                    y -= 1
+
             if event.key == pygame.K_DOWN:
-                player.rect.y += STEP
+                if moving('down', level, x, y):
+                    player.rect.y += STEP
+                    y += 1
 
     camera.update(player)
     for sprite in all_sprites:
