@@ -3,7 +3,7 @@ import pygame, os, sys
 pygame.init()
 
 all_sprites = pygame.sprite.Group()
-size = HEIGHT, WIDTH = 700, 700
+size = HEIGHT, WIDTH = 600, 600
 STEP = 50
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Перемещение героя')
@@ -55,6 +55,7 @@ tile_images = {
     'key': load_image('key.png'),
 }
 player_image = load_image('rabbit.png')
+carrot_image = load_image('carrot.png')
 
 tile_width = tile_height = 50
 # основной персонаж
@@ -64,6 +65,7 @@ player = None
 all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
+carrot_group = pygame.sprite.Group()
 
 
 class Tile(pygame.sprite.Sprite):
@@ -80,6 +82,14 @@ class Player(pygame.sprite.Sprite):
         self.image = player_image
         self.rect = self.image.get_rect().move(
             tile_width * pos_x - 14, tile_height * pos_y - 25)
+
+
+class Carrot(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(carrot_group, all_sprites)
+        self.image = carrot_image
+        self.rect = self.image.get_rect().move(
+            tile_width * pos_x, tile_height * pos_y)
 
 
 def generate_level(level):
@@ -208,24 +218,62 @@ def start_screen():
         clock.tick(FPS)
 
 
-player, level_x, level_y = generate_level(load_level('leval_23.txt'))
+def get_coords(level):
+    for y in range(len(level)):
+        for x in range(len(level[y])):
+            if level[y][x] == '@':
+                return int(x), int(y)
+
+
+def moving(direction, level, x, y):
+    logic = True
+    if direction == 'right' and level[y][x + 1] == '#' \
+            or direction == 'left' and level[y][x - 1] == '#' \
+            or direction == 'down' and level[y + 1][x] == '#' \
+            or direction == 'up' and level[y - 1][x] == '#':
+        logic = False
+    elif direction == 'right' and level[y][x + 1] == '0' \
+            or direction == 'left' and level[y][x - 1] == '0' \
+            or direction == 'down' and level[y + 1][x] == '0' \
+            or direction == 'up' and level[y - 1][x] == '0':
+        logic = False
+    elif direction == 'right' and level[y][x] == 'm' \
+            or direction == 'left' and level[y][x] == 'm' \
+            or direction == 'down' and level[y][x] == 'm' \
+            or direction == 'up' and level[y][x] == 'm':
+        Tile('earth', x, y)
+    return logic
+
+
+level = load_level('leval_30.txt')
+player, level_x, level_y = generate_level(level)
 camera = Camera()
 start_screen()
 
 running = True
+x, y = get_coords(level)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                player.rect.x -= STEP
+                if moving('left', level, x, y):
+                    player.rect.x -= STEP
+                    x -= 1
             if event.key == pygame.K_RIGHT:
-                player.rect.x += STEP
+                if moving('right', level, x, y):
+                    player.rect.x += STEP
+                    x += 1
             if event.key == pygame.K_UP:
-                player.rect.y -= STEP
+                if moving('up', level, x, y):
+                    player.rect.y -= STEP
+                    y -= 1
+
             if event.key == pygame.K_DOWN:
-                player.rect.y += STEP
+                if moving('down', level, x, y):
+                    player.rect.y += STEP
+                    y += 1
 
     camera.update(player)
     for sprite in all_sprites:
