@@ -217,7 +217,12 @@ def get_coords(level):
 
 def moving(direction, level, x, y):
     logic = True
-    if direction == 'right' and level[y][x + 1] == '#' \
+    if direction == 'right' and level[y][x + 1] == '0' \
+            or direction == 'left' and level[y][x - 1] == '0' \
+            or direction == 'down' and level[y + 1][x] == '0' \
+            or direction == 'up' and level[y - 1][x] == '0':
+        logic = False
+    elif direction == 'right' and level[y][x + 1] == '#' \
             or direction == 'left' and level[y][x - 1] == '#' \
             or direction == 'down' and level[y + 1][x] == '#' \
             or direction == 'up' and level[y - 1][x] == '#':
