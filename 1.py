@@ -3,7 +3,7 @@ import pygame, os, sys
 pygame.init()
 
 all_sprites = pygame.sprite.Group()
-size = HEIGHT, WIDTH = 600, 600
+size = HEIGHT, WIDTH = 800, 800
 STEP = 50
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Перемещение героя')
@@ -53,6 +53,8 @@ tile_images = {
     'button_yes': load_image('button_yes.png'),
     'lock': load_image('lock.png'),
     'key': load_image('key.png'),
+    'ship': load_image('ship.png'),
+    'trap1': load_image('trap.png'),
 }
 player_image = load_image('rabbit.png')
 carrot_image = load_image('carrot.png')
@@ -87,7 +89,7 @@ class Player(pygame.sprite.Sprite):
 class Carrot(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(carrot_group, all_sprites)
-        self.image = carrot_image
+        self.image = load_image('carrot.png')
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
 
@@ -109,6 +111,7 @@ def generate_level(level):
             elif level[y][x] == 'm':
                 Tile('earth', x, y)
                 Tile('carrot', x, y)
+                # Carrot(x, y)
             elif level[y][x] == '/':
                 Tile('earth', x, y)
                 Tile('trap', x, y)
@@ -171,23 +174,6 @@ def load_level(filename):
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
-class Camera:
-    # зададим начальный сдвиг камеры
-    def __init__(self):
-        self.dx = 0
-        self.dy = 0
-
-    # сдвинуть объект obj на смещение камеры
-    def apply(self, obj):
-        obj.rect.x += self.dx
-        obj.rect.y += self.dy
-
-    # позиционировать камеру на объекте target
-    def update(self, target):
-        self.dx = -(target.rect.x + target.rect.w // 2 - WIDTH // 2)
-        self.dy = -(target.rect.y + target.rect.h // 2 - HEIGHT // 2)
-
-
 def start_screen():
     intro_text = ["ЗАСТАВКА", "",
                   "Правила игры",
@@ -237,18 +223,23 @@ def moving(direction, level, x, y):
             or direction == 'down' and level[y + 1][x] == '0' \
             or direction == 'up' and level[y - 1][x] == '0':
         logic = False
-    elif direction == 'right' and level[y][x] == 'm' \
-            or direction == 'left' and level[y][x] == 'm' \
-            or direction == 'down' and level[y][x] == 'm' \
-            or direction == 'up' and level[y][x] == 'm':
+    elif direction == 'right' and level[y][x + 1] == '<' \
+            or direction == 'left' and level[y][x - 1] == '>' \
+            or direction == 'down' and level[y + 1][x] == ')' \
+            or direction == 'up' and level[y -  1][x] == '(':
+        logic = False
+    elif level[y][x] == 'm':
         Tile('earth', x, y)
+    elif level[y][x] == '/':
+        Tile("trap1", x, y)
+        Tile("ship", x, y)
     return logic
 
 
-level = load_level('leval_30.txt')
+level = load_level('leval_26.txt')
 player, level_x, level_y = generate_level(level)
-camera = Camera()
 start_screen()
+# carrot = Carrot()
 
 running = True
 x, y = get_coords(level)
@@ -275,14 +266,11 @@ while running:
                     player.rect.y += STEP
                     y += 1
 
-    camera.update(player)
-    for sprite in all_sprites:
-        camera.apply(sprite)
-
     fon = pygame.transform.scale(load_image('grass.jpg'), (WIDTH, HEIGHT))
     screen.blit(fon, (0, 0))
     tiles_group.draw(screen)
     player_group.draw(screen)
+    carrot_group.draw(screen)
 
     pygame.display.flip()
     clock.tick(FPS)
