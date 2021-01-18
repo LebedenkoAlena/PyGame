@@ -17,6 +17,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.centralwidget.setStyleSheet('''
+             background: yellow;
+                ''')
         self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -30,7 +33,11 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_1.setFont(font)
         self.pushButton_1.setObjectName("pushButton_1")
-        self.verticalLayout.addWidget(self.pushButton)
+        self.pushButton_1.setStyleSheet('''
+            background-color: #72ccff;
+            border-radius: 20px;
+        ''')
+        self.verticalLayout.addWidget(self.pushButton_1)
         self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_6.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_6.setMaximumSize(QtCore.QSize(80, 80))
@@ -38,6 +45,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_6.setFont(font)
         self.pushButton_6.setObjectName("pushButton_6")
+        self.pushButton_6.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout.addWidget(self.pushButton_6)
         self.pushButton_11 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_11.setMinimumSize(QtCore.QSize(80, 80))
@@ -46,6 +57,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_11.setFont(font)
         self.pushButton_11.setObjectName("pushButton_11")
+        self.pushButton_11.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout.addWidget(self.pushButton_11)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
@@ -57,6 +72,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_2.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_6.addWidget(self.pushButton_2)
         self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_7.setMinimumSize(QtCore.QSize(80, 80))
@@ -65,6 +84,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_7.setFont(font)
         self.pushButton_7.setObjectName("pushButton_7")
+        self.pushButton_7.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_6.addWidget(self.pushButton_7)
         self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_12.setMinimumSize(QtCore.QSize(80, 80))
@@ -73,6 +96,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_12.setFont(font)
         self.pushButton_12.setObjectName("pushButton_12")
+        self.pushButton_12.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_6.addWidget(self.pushButton_12)
         self.horizontalLayout.addLayout(self.verticalLayout_6)
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
@@ -84,6 +111,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_3.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_7.addWidget(self.pushButton_3)
         self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_8.setMinimumSize(QtCore.QSize(80, 80))
@@ -92,6 +123,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_8.setFont(font)
         self.pushButton_8.setObjectName("pushButton_8")
+        self.pushButton_8.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_7.addWidget(self.pushButton_8)
         self.pushButton_13 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_13.setMinimumSize(QtCore.QSize(80, 80))
@@ -100,6 +135,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_13.setFont(font)
         self.pushButton_13.setObjectName("pushButton_13")
+        self.pushButton_13.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_7.addWidget(self.pushButton_13)
         self.horizontalLayout.addLayout(self.verticalLayout_7)
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
@@ -111,6 +150,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_4.setFont(font)
         self.pushButton_4.setObjectName("pushButton_4")
+        self.pushButton_4.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_8.addWidget(self.pushButton_4)
         self.pushButton_9 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_9.setMinimumSize(QtCore.QSize(80, 80))
@@ -119,6 +162,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_9.setFont(font)
         self.pushButton_9.setObjectName("pushButton_9")
+        self.pushButton_9.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_8.addWidget(self.pushButton_9)
         self.pushButton_14 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_14.setMinimumSize(QtCore.QSize(80, 80))
@@ -127,6 +174,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_14.setFont(font)
         self.pushButton_14.setObjectName("pushButton_14")
+        self.pushButton_14.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_8.addWidget(self.pushButton_14)
         self.horizontalLayout.addLayout(self.verticalLayout_8)
         self.verticalLayout_9 = QtWidgets.QVBoxLayout()
@@ -138,6 +189,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_5.setFont(font)
         self.pushButton_5.setObjectName("pushButton_5")
+        self.pushButton_5.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_9.addWidget(self.pushButton_5)
         self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_10.setMinimumSize(QtCore.QSize(80, 80))
@@ -146,6 +201,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_10.setFont(font)
         self.pushButton_10.setObjectName("pushButton_10")
+        self.pushButton_10.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_9.addWidget(self.pushButton_10)
         self.pushButton_15 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_15.setMinimumSize(QtCore.QSize(80, 80))
@@ -154,6 +213,10 @@ class Ui_MainWindow(object):
         font.setPointSize(15)
         self.pushButton_15.setFont(font)
         self.pushButton_15.setObjectName("pushButton_15")
+        self.pushButton_15.setStyleSheet('''
+                    background-color: #72ccff;
+                    border-radius: 20px;
+                ''')
         self.verticalLayout_9.addWidget(self.pushButton_15)
         self.horizontalLayout.addLayout(self.verticalLayout_9)
         self.verticalLayout_10.addLayout(self.horizontalLayout)
