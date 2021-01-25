@@ -11,22 +11,35 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class Ui_mainWindow(object):
+    def setupUi(self, mainWindow):
+        mainWindow.setObjectName("mainWindow")
+        mainWindow.resize(800, 600)
+        mainWindow.setMinimumSize(QtCore.QSize(800, 600))
+        mainWindow.setMaximumSize(QtCore.QSize(800, 600))
+        mainWindow.setWindowTitle("CRAZY HARE")
+        self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.centralwidget.setStyleSheet('''
-             background: yellow;
-                ''')
-        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout_10.setObjectName("verticalLayout_10")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+        self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
+        self.tabWidget.setObjectName("tabWidget")
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("tab")
+        self.widget = QtWidgets.QWidget(self.tab)
+        self.widget.setGeometry(QtCore.QRect(0, 0, 781, 501))
+        self.widget.setObjectName("widget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.pushButton_1 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_1 = QtWidgets.QPushButton(self.widget)
         self.pushButton_1.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_1.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -34,11 +47,12 @@ class Ui_MainWindow(object):
         self.pushButton_1.setFont(font)
         self.pushButton_1.setObjectName("pushButton_1")
         self.pushButton_1.setStyleSheet('''
-            background-color: #72ccff;
-            border-radius: 20px;
-        ''')
+                    background-image: url(sky.png);
+                    border-radius: 20px;
+                    color: #4700c2 ;
+                ''')
         self.verticalLayout.addWidget(self.pushButton_1)
-        self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_6 = QtWidgets.QPushButton(self.widget)
         self.pushButton_6.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_6.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -46,11 +60,12 @@ class Ui_MainWindow(object):
         self.pushButton_6.setFont(font)
         self.pushButton_6.setObjectName("pushButton_6")
         self.pushButton_6.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout.addWidget(self.pushButton_6)
-        self.pushButton_11 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_11 = QtWidgets.QPushButton(self.widget)
         self.pushButton_11.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_11.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -58,14 +73,15 @@ class Ui_MainWindow(object):
         self.pushButton_11.setFont(font)
         self.pushButton_11.setObjectName("pushButton_11")
         self.pushButton_11.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout.addWidget(self.pushButton_11)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2 = QtWidgets.QPushButton(self.widget)
         self.pushButton_2.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_2.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -73,11 +89,12 @@ class Ui_MainWindow(object):
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_6.addWidget(self.pushButton_2)
-        self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_7 = QtWidgets.QPushButton(self.widget)
         self.pushButton_7.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_7.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -85,11 +102,12 @@ class Ui_MainWindow(object):
         self.pushButton_7.setFont(font)
         self.pushButton_7.setObjectName("pushButton_7")
         self.pushButton_7.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_6.addWidget(self.pushButton_7)
-        self.pushButton_12 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_12 = QtWidgets.QPushButton(self.widget)
         self.pushButton_12.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_12.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -97,14 +115,15 @@ class Ui_MainWindow(object):
         self.pushButton_12.setFont(font)
         self.pushButton_12.setObjectName("pushButton_12")
         self.pushButton_12.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_6.addWidget(self.pushButton_12)
         self.horizontalLayout.addLayout(self.verticalLayout_6)
         self.verticalLayout_7 = QtWidgets.QVBoxLayout()
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3 = QtWidgets.QPushButton(self.widget)
         self.pushButton_3.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_3.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -112,11 +131,12 @@ class Ui_MainWindow(object):
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_7.addWidget(self.pushButton_3)
-        self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_8 = QtWidgets.QPushButton(self.widget)
         self.pushButton_8.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_8.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -124,11 +144,12 @@ class Ui_MainWindow(object):
         self.pushButton_8.setFont(font)
         self.pushButton_8.setObjectName("pushButton_8")
         self.pushButton_8.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_7.addWidget(self.pushButton_8)
-        self.pushButton_13 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_13 = QtWidgets.QPushButton(self.widget)
         self.pushButton_13.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_13.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -136,14 +157,15 @@ class Ui_MainWindow(object):
         self.pushButton_13.setFont(font)
         self.pushButton_13.setObjectName("pushButton_13")
         self.pushButton_13.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_7.addWidget(self.pushButton_13)
         self.horizontalLayout.addLayout(self.verticalLayout_7)
         self.verticalLayout_8 = QtWidgets.QVBoxLayout()
         self.verticalLayout_8.setObjectName("verticalLayout_8")
-        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_4 = QtWidgets.QPushButton(self.widget)
         self.pushButton_4.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_4.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -151,11 +173,12 @@ class Ui_MainWindow(object):
         self.pushButton_4.setFont(font)
         self.pushButton_4.setObjectName("pushButton_4")
         self.pushButton_4.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_8.addWidget(self.pushButton_4)
-        self.pushButton_9 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_9 = QtWidgets.QPushButton(self.widget)
         self.pushButton_9.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_9.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -163,11 +186,12 @@ class Ui_MainWindow(object):
         self.pushButton_9.setFont(font)
         self.pushButton_9.setObjectName("pushButton_9")
         self.pushButton_9.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_8.addWidget(self.pushButton_9)
-        self.pushButton_14 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_14 = QtWidgets.QPushButton(self.widget)
         self.pushButton_14.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_14.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -175,14 +199,15 @@ class Ui_MainWindow(object):
         self.pushButton_14.setFont(font)
         self.pushButton_14.setObjectName("pushButton_14")
         self.pushButton_14.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_8.addWidget(self.pushButton_14)
         self.horizontalLayout.addLayout(self.verticalLayout_8)
         self.verticalLayout_9 = QtWidgets.QVBoxLayout()
         self.verticalLayout_9.setObjectName("verticalLayout_9")
-        self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_5 = QtWidgets.QPushButton(self.widget)
         self.pushButton_5.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_5.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -190,11 +215,12 @@ class Ui_MainWindow(object):
         self.pushButton_5.setFont(font)
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_9.addWidget(self.pushButton_5)
-        self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_10 = QtWidgets.QPushButton(self.widget)
         self.pushButton_10.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_10.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -202,11 +228,12 @@ class Ui_MainWindow(object):
         self.pushButton_10.setFont(font)
         self.pushButton_10.setObjectName("pushButton_10")
         self.pushButton_10.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_9.addWidget(self.pushButton_10)
-        self.pushButton_15 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_15 = QtWidgets.QPushButton(self.widget)
         self.pushButton_15.setMinimumSize(QtCore.QSize(80, 80))
         self.pushButton_15.setMaximumSize(QtCore.QSize(80, 80))
         font = QtGui.QFont()
@@ -214,39 +241,283 @@ class Ui_MainWindow(object):
         self.pushButton_15.setFont(font)
         self.pushButton_15.setObjectName("pushButton_15")
         self.pushButton_15.setStyleSheet('''
-                    background-color: #72ccff;
-                    border-radius: 20px;
-                ''')
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
         self.verticalLayout_9.addWidget(self.pushButton_15)
         self.horizontalLayout.addLayout(self.verticalLayout_9)
-        self.verticalLayout_10.addLayout(self.horizontalLayout)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.tabWidget.addTab(self.tab, "")
+        self.tab_2 = QtWidgets.QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.layoutWidget = QtWidgets.QWidget(self.tab_2)
+        self.layoutWidget.setGeometry(QtCore.QRect(0, 0, 781, 501))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.layoutWidget)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.pushButton_16 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_16.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_16.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_16.setFont(font)
+        self.pushButton_16.setObjectName("pushButton_16")
+        self.pushButton_16.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_2.addWidget(self.pushButton_16)
+        self.pushButton_21 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_21.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_21.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_21.setFont(font)
+        self.pushButton_21.setObjectName("pushButton_21")
+        self.pushButton_21.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_2.addWidget(self.pushButton_21)
+        self.pushButton_26 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_26.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_26.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_26.setFont(font)
+        self.pushButton_26.setObjectName("pushButton_26")
+        self.pushButton_26.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_2.addWidget(self.pushButton_26)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_2)
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.pushButton_17 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_17.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_17.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_17.setFont(font)
+        self.pushButton_17.setObjectName("pushButton_17")
+        self.pushButton_17.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2;
+                        ''')
+        self.verticalLayout_11.addWidget(self.pushButton_17)
+        self.pushButton_22 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_22.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_22.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_22.setFont(font)
+        self.pushButton_22.setObjectName("pushButton_22")
+        self.pushButton_22.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_11.addWidget(self.pushButton_22)
+        self.pushButton_27 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_27.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_27.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_27.setFont(font)
+        self.pushButton_27.setObjectName("pushButton_27")
+        self.pushButton_27.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_11.addWidget(self.pushButton_27)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_11)
+        self.verticalLayout_12 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.pushButton_18 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_18.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_18.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_18.setFont(font)
+        self.pushButton_18.setObjectName("pushButton_18")
+        self.pushButton_18.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_12.addWidget(self.pushButton_18)
+        self.pushButton_23 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_23.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_23.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_23.setFont(font)
+        self.pushButton_23.setObjectName("pushButton_23")
+        self.pushButton_23.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_12.addWidget(self.pushButton_23)
+        self.pushButton_28 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_28.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_28.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_28.setFont(font)
+        self.pushButton_28.setObjectName("pushButton_28")
+        self.pushButton_28.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_12.addWidget(self.pushButton_28)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_12)
+        self.verticalLayout_13 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
+        self.pushButton_19 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_19.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_19.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_19.setFont(font)
+        self.pushButton_19.setObjectName("pushButton_19")
+        self.pushButton_19.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_13.addWidget(self.pushButton_19)
+        self.pushButton_24 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_24.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_24.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_24.setFont(font)
+        self.pushButton_24.setObjectName("pushButton_24")
+        self.pushButton_24.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_13.addWidget(self.pushButton_24)
+        self.pushButton_29 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_29.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_29.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_29.setFont(font)
+        self.pushButton_29.setObjectName("pushButton_29")
+        self.pushButton_29.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_13.addWidget(self.pushButton_29)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_13)
+        self.verticalLayout_14 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.pushButton_20 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_20.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_20.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_20.setFont(font)
+        self.pushButton_20.setObjectName("pushButton_20")
+        self.pushButton_20.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_14.addWidget(self.pushButton_20)
+        self.pushButton_25 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_25.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_25.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_25.setFont(font)
+        self.pushButton_25.setObjectName("pushButton_25")
+        self.pushButton_25.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;                            
+                        ''')
+        self.verticalLayout_14.addWidget(self.pushButton_25)
+        self.pushButton_30 = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushButton_30.setMinimumSize(QtCore.QSize(80, 80))
+        self.pushButton_30.setMaximumSize(QtCore.QSize(80, 80))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.pushButton_30.setFont(font)
+        self.pushButton_30.setObjectName("pushButton_30")
+        self.pushButton_30.setStyleSheet('''
+                            background-image: url(sky.png);
+                            border-radius: 20px;
+                            color: #4700c2 ;
+                        ''')
+        self.verticalLayout_14.addWidget(self.pushButton_30)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_14)
+        self.tabWidget.addTab(self.tab_2, "")
+        self.verticalLayout_3.addWidget(self.tabWidget)
+        self.horizontalLayout_4.addLayout(self.verticalLayout_3)
+        mainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(mainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        mainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(mainWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        mainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow):
+        self.retranslateUi(mainWindow)
+        self.tabWidget.setCurrentIndex(1)
+        mainWindow.setStyleSheet('''
+                    background-color: #72ccff;
+                ''')
+        QtCore.QMetaObject.connectSlotsByName(mainWindow)
+
+    def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton_1.setText(_translate("MainWindow", "1"))
-        self.pushButton_6.setText(_translate("MainWindow", "6"))
-        self.pushButton_11.setText(_translate("MainWindow", "11"))
-        self.pushButton_2.setText(_translate("MainWindow", "2"))
-        self.pushButton_7.setText(_translate("MainWindow", "7"))
-        self.pushButton_12.setText(_translate("MainWindow", "12"))
-        self.pushButton_3.setText(_translate("MainWindow", "3"))
-        self.pushButton_8.setText(_translate("MainWindow", "8"))
-        self.pushButton_13.setText(_translate("MainWindow", "13"))
-        self.pushButton_4.setText(_translate("MainWindow", "4"))
-        self.pushButton_9.setText(_translate("MainWindow", "9"))
-        self.pushButton_14.setText(_translate("MainWindow", "14"))
-        self.pushButton_5.setText(_translate("MainWindow", "5"))
-        self.pushButton_10.setText(_translate("MainWindow", "10"))
-        self.pushButton_15.setText(_translate("MainWindow", "15"))
+        self.pushButton_1.setText(_translate("mainWindow", "1"))
+        self.pushButton_6.setText(_translate("mainWindow", "6"))
+        self.pushButton_11.setText(_translate("mainWindow", "11"))
+        self.pushButton_2.setText(_translate("mainWindow", "2"))
+        self.pushButton_7.setText(_translate("mainWindow", "7"))
+        self.pushButton_12.setText(_translate("mainWindow", "12"))
+        self.pushButton_3.setText(_translate("mainWindow", "3"))
+        self.pushButton_8.setText(_translate("mainWindow", "8"))
+        self.pushButton_13.setText(_translate("mainWindow", "13"))
+        self.pushButton_4.setText(_translate("mainWindow", "4"))
+        self.pushButton_9.setText(_translate("mainWindow", "9"))
+        self.pushButton_14.setText(_translate("mainWindow", "14"))
+        self.pushButton_5.setText(_translate("mainWindow", "5"))
+        self.pushButton_10.setText(_translate("mainWindow", "10"))
+        self.pushButton_15.setText(_translate("mainWindow", "15"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("mainWindow", "1-15"))
+        self.pushButton_16.setText(_translate("mainWindow", "16"))
+        self.pushButton_21.setText(_translate("mainWindow", "21"))
+        self.pushButton_26.setText(_translate("mainWindow", "26"))
+        self.pushButton_17.setText(_translate("mainWindow", "17"))
+        self.pushButton_22.setText(_translate("mainWindow", "22"))
+        self.pushButton_27.setText(_translate("mainWindow", "27"))
+        self.pushButton_18.setText(_translate("mainWindow", "18"))
+        self.pushButton_23.setText(_translate("mainWindow", "23"))
+        self.pushButton_28.setText(_translate("mainWindow", "28"))
+        self.pushButton_19.setText(_translate("mainWindow", "19"))
+        self.pushButton_24.setText(_translate("mainWindow", "24"))
+        self.pushButton_29.setText(_translate("mainWindow", "29"))
+        self.pushButton_20.setText(_translate("mainWindow", "20"))
+        self.pushButton_25.setText(_translate("mainWindow", "25"))
+        self.pushButton_30.setText(_translate("mainWindow", "30"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("mainWindow", "15-30"))
+
