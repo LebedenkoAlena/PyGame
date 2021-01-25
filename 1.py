@@ -174,36 +174,6 @@ def load_level(filename):
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
-def start_screen():
-    intro_text = ["ЗАСТАВКА", "",
-                  "Правила игры",
-                  "Если в правилах несколько строк,",
-                  "приходится выводить их построчно"]
-
-    fon = pygame.transform.scale(load_image('fon.jpg'), (WIDTH, HEIGHT))
-    screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
-    text_coord = 50
-    for line in intro_text:
-        string_rendered = font.render(line, 1, pygame.Color('black'))
-        intro_rect = string_rendered.get_rect()
-        text_coord += 10
-        intro_rect.top = text_coord
-        intro_rect.x = 10
-        text_coord += intro_rect.height
-        screen.blit(string_rendered, intro_rect)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                terminate()
-            elif event.type == pygame.KEYDOWN or \
-                    event.type == pygame.MOUSEBUTTONDOWN:
-                return  # начинаем игру
-        pygame.display.flip()
-        clock.tick(FPS)
-
-
 def get_coords(level):
     for y in range(len(level)):
         for x in range(len(level[y])):
@@ -211,8 +181,13 @@ def get_coords(level):
                 return int(x), int(y)
 
 
+c = 0
+s = []
+
+
 def moving(direction, level, x, y):
     logic = True
+    global c
     if direction == 'right' and level[y][x + 1] == '#' \
             or direction == 'left' and level[y][x - 1] == '#' \
             or direction == 'down' and level[y + 1][x] == '#' \
@@ -226,19 +201,29 @@ def moving(direction, level, x, y):
     elif direction == 'right' and level[y][x + 1] == '<' \
             or direction == 'left' and level[y][x - 1] == '>' \
             or direction == 'down' and level[y + 1][x] == ')' \
-            or direction == 'up' and level[y -  1][x] == '(':
+            or direction == 'up' and level[y - 1][x] == '(':
         logic = False
     elif level[y][x] == 'm':
         Tile('earth', x, y)
+        global c, s
+        a = (x, y)
+        if not a in s:
+            c += 1
+            s.append(a)
     elif level[y][x] == '/':
         Tile("trap1", x, y)
         Tile("ship", x, y)
+        a = (x, y)
+        if not a in s:
+            s.append(a)
+        else:
+            terminate()
+
     return logic
 
 
 level = load_level('leval_26.txt')
 player, level_x, level_y = generate_level(level)
-start_screen()
 # carrot = Carrot()
 
 running = True
@@ -247,6 +232,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            print(c)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 if moving('left', level, x, y):
