@@ -38,7 +38,7 @@ tile_images = {
     'box': load_image('box.png'),
     'earth': load_image('earth.png'),
     'end': load_image('end.png'),
-    'trap': load_image('trap1.png'),
+    'trap': load_image('trap.png'),
     'arrow_l': load_image('arrow_l.png'),
     'arrow_r': load_image('arrow_r.png'),
     'arrow_b': load_image('arrow_b.png'),
@@ -53,12 +53,11 @@ tile_images = {
     'button_yes': load_image('button_yes.png'),
     'lock': load_image('lock.png'),
     'key': load_image('key.png'),
-    'ship': load_image('ship.png'),
-    'trap1': load_image('trap.png'),
 }
 player_image = load_image('rabbit.png')
 carrot_image = load_image('carrot.png')
 shetchik = load_image('shetchik1.png')
+ship_image = load_image('ship.png')
 
 tile_width = tile_height = 50
 # основной персонаж
@@ -69,6 +68,7 @@ all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 carrot_group = pygame.sprite.Group()
+ship_group = pygame.sprite.Group()
 
 
 class Tile(pygame.sprite.Sprite):
@@ -96,12 +96,19 @@ class Carrot(pygame.sprite.Sprite):
             tile_width * pos_x, tile_height * pos_y)
 
 
+class Ship(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(ship_group, all_sprites)
+        self.image = ship_image
+        self.rect = self.image.get_rect().move(
+            tile_width * pos_x, tile_height * pos_y)
+
+
 def draw_lives(surf, x, y, img):
     img_rect = img.get_rect()
     img_rect.x = x - 5
     img_rect.y = y
     surf.blit(img, img_rect)
-
 
 
 def draw_col(col):
@@ -130,9 +137,7 @@ def generate_level(level):
             elif level[y][x] == 'm':
                 Tile('earth', x, y)
                 Carrot(x, y)
-                # Carrot(x, y)
             elif level[y][x] == '/':
-                Tile('earth', x, y)
                 Tile('trap', x, y)
             elif level[y][x] == '<':
                 Tile('earth', x, y)
@@ -200,13 +205,21 @@ def get_coords(level):
                 return int(x), int(y)
 
 
-c = 0
-s = []
+def game_over(screen):
+    screen.fill((0, 0, 0))
+    font = pygame.font.Font(None, 100)
+    text = font.render("GAME OVER", True, (136, 231, 252))
+    text_x = WIDTH // 2 - text.get_width() // 2
+    text_y = HEIGHT // 2 - text.get_height() // 2
+    text_w = text.get_width()
+    text_h = text.get_height()
+    screen.blit(text, (text_x, text_y))
+    pygame.draw.rect(screen, (136, 231, 252), (text_x - 10, text_y - 10,
+                                           text_w + 20, text_h + 20), 10)
 
 
 def moving(direction, level, x, y):
     logic = True
-    global c
     if direction == 'right' and level[y][x + 1] == '#' \
             or direction == 'left' and level[y][x - 1] == '#' \
             or direction == 'down' and level[y + 1][x] == '#' \
@@ -218,29 +231,20 @@ def moving(direction, level, x, y):
             or direction == 'up' and level[y - 1][x] == '0':
         logic = False
     elif direction == 'right' and level[y][x + 1] == '<' \
+            or direction == 'down' and level[y + 1][x] == '<' \
+            or direction == 'up' and level[y - 1][x] == '<' \
             or direction == 'left' and level[y][x - 1] == '>' \
+            or direction == 'down' and level[y + 1][x] == '>' \
+            or direction == 'up' and level[y - 1][x] == '>' \
             or direction == 'down' and level[y + 1][x] == ')' \
-            or direction == 'up' and level[y - 1][x] == '(':
+            or direction == 'right' and level[y][x + 1] == ')' \
+            or direction == 'left' and level[y][x - 1] == ')' \
+            or direction == 'up' and level[y - 1][x] == '(' \
+            or direction == 'right' and level[y][x + 1] == '(' \
+            or direction == 'left' and level[y][x - 1] == '(':
         logic = False
-    # if hits:
-    #     c += 1
-    #     running = False
-    # elif level[y][x] == 'm':
-    #     Tile('earth', x, y)
-    #     global c, s
-    #     a = (x, y)
-    #     if not a in s:
-    #         c += 1
-    #         s.append(a)
     elif level[y][x] == '/':
-        Tile("trap1", x, y)
-        Tile("ship", x, y)
-        a = (x, y)
-        if not a in s:
-            s.append(a)
-        else:
-            terminate()
-    # hits = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
+        Ship(x, y)
 
     return logic
 
@@ -248,7 +252,6 @@ def moving(direction, level, x, y):
 level = load_level('leval_26.txt')
 player, level_x, level_y = generate_level(level)
 col = 0
-# carrot = Carrot()
 
 running = True
 x, y = get_coords(level)
@@ -256,7 +259,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            print(c)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 if moving('left', level, x, y):
@@ -281,14 +283,17 @@ while running:
     tiles_group.draw(screen)
     player_group.draw(screen)
     carrot_group.draw(screen)
+    ship_group.draw(screen)
     draw_lives(screen, WIDTH - 50, 5,
                shetchik)
 
     hits = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
+    hit = pygame.sprite.spritecollide(player, ship_group, False, pygame.sprite.collide_circle)
     if hits:
         col += 1
     draw_col(str(col))
-
+    if hit:
+        game_over(screen)
 
     pygame.display.flip()
     clock.tick(FPS)
