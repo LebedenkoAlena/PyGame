@@ -58,6 +58,7 @@ tile_images = {
 }
 player_image = load_image('rabbit.png')
 carrot_image = load_image('carrot.png')
+shetchik = load_image('shetchik1.png')
 
 tile_width = tile_height = 50
 # основной персонаж
@@ -84,14 +85,32 @@ class Player(pygame.sprite.Sprite):
         self.image = player_image
         self.rect = self.image.get_rect().move(
             tile_width * pos_x - 14, tile_height * pos_y - 25)
+        self.radius = 5
 
 
 class Carrot(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(carrot_group, all_sprites)
-        self.image = load_image('carrot.png')
+        self.image = carrot_image
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
+
+
+def draw_lives(surf, x, y, img):
+    img_rect = img.get_rect()
+    img_rect.x = x - 5
+    img_rect.y = y
+    surf.blit(img, img_rect)
+
+
+
+def draw_col(col):
+    font = pygame.font.Font(None, 90)
+    text = font.render(col, True, (255, 255, 255))
+    if int(col) < 10:
+        screen.blit(text, (700, 5))
+    else:
+        screen.blit(text, (670, 5))
 
 
 def generate_level(level):
@@ -110,7 +129,7 @@ def generate_level(level):
                 Tile('end', x, y)
             elif level[y][x] == 'm':
                 Tile('earth', x, y)
-                Tile('carrot', x, y)
+                Carrot(x, y)
                 # Carrot(x, y)
             elif level[y][x] == '/':
                 Tile('earth', x, y)
@@ -203,13 +222,16 @@ def moving(direction, level, x, y):
             or direction == 'down' and level[y + 1][x] == ')' \
             or direction == 'up' and level[y - 1][x] == '(':
         logic = False
-    elif level[y][x] == 'm':
-        Tile('earth', x, y)
-        global c, s
-        a = (x, y)
-        if not a in s:
-            c += 1
-            s.append(a)
+    # if hits:
+    #     c += 1
+    #     running = False
+    # elif level[y][x] == 'm':
+    #     Tile('earth', x, y)
+    #     global c, s
+    #     a = (x, y)
+    #     if not a in s:
+    #         c += 1
+    #         s.append(a)
     elif level[y][x] == '/':
         Tile("trap1", x, y)
         Tile("ship", x, y)
@@ -218,12 +240,14 @@ def moving(direction, level, x, y):
             s.append(a)
         else:
             terminate()
+    # hits = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
 
     return logic
 
 
 level = load_level('leval_26.txt')
 player, level_x, level_y = generate_level(level)
+col = 0
 # carrot = Carrot()
 
 running = True
@@ -257,6 +281,14 @@ while running:
     tiles_group.draw(screen)
     player_group.draw(screen)
     carrot_group.draw(screen)
+    draw_lives(screen, WIDTH - 50, 5,
+               shetchik)
+
+    hits = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
+    if hits:
+        col += 1
+    draw_col(str(col))
+
 
     pygame.display.flip()
     clock.tick(FPS)

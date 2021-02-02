@@ -478,11 +478,10 @@ class Ui_mainWindow(object):
         self.statusbar.setObjectName("statusbar")
         mainWindow.setStatusBar(self.statusbar)
 
-
         self.retranslateUi(mainWindow)
         self.tabWidget.setCurrentIndex(1)
         mainWindow.setStyleSheet('''
-                    background-color: #72ccff;
+                    background-color: #afdafc;
                 ''')
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
@@ -520,4 +519,3 @@ class Ui_mainWindow(object):
         self.pushButton_25.setText(_translate("mainWindow", "25"))
         self.pushButton_30.setText(_translate("mainWindow", "30"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("mainWindow", "15-30"))
-
