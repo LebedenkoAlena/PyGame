@@ -33,6 +33,39 @@ def terminate():
     sys.exit()
 
 
+level_carrot = {
+    'leval_1.txt': 9,
+    'leval_2.txt': 13,
+    'leval_3.txt': 12,
+    'leval_4.txt': 35,
+    'leval_5.txt': 19,
+    'leval_6.txt': 24,
+    'leval_7.txt': 34,
+    'leval_8.txt': 8,
+    'leval_9.txt': 27,
+    'leval_10.txt': 17,
+    'leval_11.txt': 16,
+    'leval_12.txt': 27,
+    'leval_13.txt': 8,
+    'leval_14.txt': 17,
+    'leval_15.txt': 10,
+    'leval_16.txt': 21,
+    'leval_17.txt': 21,
+    'leval_18.txt': 18,
+    'leval_19.txt': 8,
+    'leval_20.txt': 23,
+    'leval_21.txt': 18,
+    'leval_22.txt': 18,
+    'leval_23.txt': 32,
+    'leval_24.txt': 11,
+    'leval_25.txt': 21,
+    'leval_26.txt': 65,
+    'leval_27.txt': 8,
+    'leval_28.txt': 22,
+    'leval_29.txt': 15,
+    'leval_30.txt': 10,
+}
+
 tile_images = {
     'carrot': load_image('carrot.png'),
     'box': load_image('box.png'),
@@ -215,7 +248,7 @@ def game_over(screen):
     text_h = text.get_height()
     screen.blit(text, (text_x, text_y))
     pygame.draw.rect(screen, (136, 231, 252), (text_x - 10, text_y - 10,
-                                           text_w + 20, text_h + 20), 10)
+                                               text_w + 20, text_h + 20), 10)
 
 
 def moving(direction, level, x, y):
@@ -249,9 +282,10 @@ def moving(direction, level, x, y):
     return logic
 
 
-level = load_level('leval_26.txt')
+leval = 'leval_2.txt'
+level = load_level(leval)
 player, level_x, level_y = generate_level(level)
-col = 0
+col = level_carrot[leval]
 
 running = True
 x, y = get_coords(level)
@@ -290,7 +324,7 @@ while running:
     hits = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
     hit = pygame.sprite.spritecollide(player, ship_group, False, pygame.sprite.collide_circle)
     if hits:
-        col += 1
+        col -= 1
     draw_col(str(col))
     if hit:
         game_over(screen)
