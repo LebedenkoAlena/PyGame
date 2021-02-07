@@ -89,6 +89,8 @@ tile_images = {
 }
 player_image = load_image('rabbit.png')
 carrot_image = load_image('carrot.png')
+key_image = load_image('key.png')
+lock_image = load_image('lock.png')
 shetchik = load_image('shetchik1.png')
 ship_image = load_image('ship.png')
 
@@ -99,6 +101,8 @@ player = None
 # группы спрайтов
 all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
+key_group = pygame.sprite.Group()
+lock_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 carrot_group = pygame.sprite.Group()
 ship_group = pygame.sprite.Group()
@@ -129,12 +133,29 @@ class Carrot(pygame.sprite.Sprite):
             tile_width * pos_x, tile_height * pos_y)
 
 
+class Key(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(key_group, all_sprites)
+        self.image = key_image
+        self.rect = self.image.get_rect().move(
+            tile_width * pos_x, tile_height * pos_y)
+
+
+class Lock(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__(lock_group, all_sprites)
+        self.image = lock_image
+        self.rect = self.image.get_rect().move(
+            tile_width * pos_x, tile_height * pos_y)
+
+
 class Ship(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(ship_group, all_sprites)
         self.image = ship_image
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
+        self.radius = 25
 
 
 def draw_lives(surf, x, y, img):
@@ -144,13 +165,13 @@ def draw_lives(surf, x, y, img):
     surf.blit(img, img_rect)
 
 
-def draw_col(col):
+def draw_col(col, h):
     font = pygame.font.Font(None, 90)
     text = font.render(col, True, (255, 255, 255))
     if int(col) < 10:
-        screen.blit(text, (700, 5))
+        screen.blit(text, (h - 100, 5))
     else:
-        screen.blit(text, (670, 5))
+        screen.blit(text, (h - 130, 5))
 
 
 def generate_level(level):
@@ -210,10 +231,10 @@ def generate_level(level):
                 Tile('button_yes', x, y)
             elif level[y][x] == '%':
                 Tile('earth', x, y)
-                Tile('lock', x, y)
+                Lock(x, y)
             elif level[y][x] == '!':
                 Tile('earth', x, y)
-                Tile('key', x, y)
+                Key(x, y)
     # вернем игрока, а также размер поля в клетках
     return new_player, x, y
 
@@ -282,10 +303,14 @@ def moving(direction, level, x, y):
     return logic
 
 
-leval = 'leval_2.txt'
+
+
+leval = 'leval_26.txt'
 level = load_level(leval)
 player, level_x, level_y = generate_level(level)
 col = level_carrot[leval]
+col_key = 20
+
 
 running = True
 x, y = get_coords(level)
@@ -317,17 +342,25 @@ while running:
     tiles_group.draw(screen)
     player_group.draw(screen)
     carrot_group.draw(screen)
+    key_group.draw(screen)
     ship_group.draw(screen)
+    lock_group.draw(screen)
     draw_lives(screen, WIDTH - 50, 5,
                shetchik)
 
-    hits = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
-    hit = pygame.sprite.spritecollide(player, ship_group, False, pygame.sprite.collide_circle)
-    if hits:
+    crossing_carrot = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
+    crossing_ship = pygame.sprite.spritecollide(player, ship_group, False, pygame.sprite.collide_circle)
+    crossing_key = pygame.sprite.spritecollide(player, key_group, True, pygame.sprite.collide_circle)
+    crossing_lock = pygame.sprite.spritecollide(player, lock_group, True, pygame.sprite.collide_circle)
+    if crossing_carrot:
         col -= 1
-    draw_col(str(col))
-    if hit:
+    draw_col(str(col), HEIGHT)
+    if crossing_ship:
         game_over(screen)
+    if crossing_key:
+        col_key += 1
+
+
 
     pygame.display.flip()
     clock.tick(FPS)
