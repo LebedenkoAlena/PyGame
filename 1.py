@@ -147,6 +147,7 @@ class Lock(pygame.sprite.Sprite):
         self.image = lock_image
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
+        self.radius = 25
 
 
 class Ship(pygame.sprite.Sprite):
@@ -272,7 +273,8 @@ def game_over(screen):
                                                text_w + 20, text_h + 20), 10)
 
 
-def moving(direction, level, x, y):
+def moving(direction, level, x, y, col_key):
+    crossing_lock = pygame.sprite.spritecollide(player, lock_group, False, pygame.sprite.collide_circle)
     logic = True
     if direction == 'right' and level[y][x + 1] == '#' \
             or direction == 'left' and level[y][x - 1] == '#' \
@@ -299,17 +301,22 @@ def moving(direction, level, x, y):
         logic = False
     elif level[y][x] == '/':
         Ship(x, y)
+    elif direction == 'right' and crossing_lock and col_key < 1 \
+            or direction == 'left' and crossing_lock and col_key < 1 \
+            or direction == 'down' and crossing_lock and col_key < 1 \
+            or direction == 'up' and crossing_lock and col_key < 1:
+        logic = False
 
     return logic
 
 
 
 
-leval = 'leval_26.txt'
+leval = 'leval_18.txt'
 level = load_level(leval)
 player, level_x, level_y = generate_level(level)
 col = level_carrot[leval]
-col_key = 20
+col_key = 0
 
 
 running = True
@@ -320,23 +327,21 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                if moving('left', level, x, y):
+                if moving('left', level, x, y, col_key):
                     player.rect.x -= STEP
                     x -= 1
             if event.key == pygame.K_RIGHT:
-                if moving('right', level, x, y):
+                if moving('right', level, x, y, col_key):
                     player.rect.x += STEP
                     x += 1
             if event.key == pygame.K_UP:
-                if moving('up', level, x, y):
+                if moving('up', level, x, y, col_key):
                     player.rect.y -= STEP
                     y -= 1
-
             if event.key == pygame.K_DOWN:
-                if moving('down', level, x, y):
+                if moving('down', level, x, y, col_key):
                     player.rect.y += STEP
                     y += 1
-
     fon = pygame.transform.scale(load_image('grass.jpg'), (WIDTH, HEIGHT))
     screen.blit(fon, (0, 0))
     tiles_group.draw(screen)
@@ -351,7 +356,6 @@ while running:
     crossing_carrot = pygame.sprite.spritecollide(player, carrot_group, True, pygame.sprite.collide_circle)
     crossing_ship = pygame.sprite.spritecollide(player, ship_group, False, pygame.sprite.collide_circle)
     crossing_key = pygame.sprite.spritecollide(player, key_group, True, pygame.sprite.collide_circle)
-    crossing_lock = pygame.sprite.spritecollide(player, lock_group, True, pygame.sprite.collide_circle)
     if crossing_carrot:
         col -= 1
     draw_col(str(col), HEIGHT)
@@ -359,8 +363,10 @@ while running:
         game_over(screen)
     if crossing_key:
         col_key += 1
-
-
+    if col_key >= 1:
+        crossing_lock = pygame.sprite.spritecollide(player, lock_group, True, pygame.sprite.collide_circle)
+        if crossing_lock:
+            col_key -= 1
 
     pygame.display.flip()
     clock.tick(FPS)
