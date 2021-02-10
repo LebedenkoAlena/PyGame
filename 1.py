@@ -6,9 +6,10 @@ all_sprites = pygame.sprite.Group()
 size = HEIGHT, WIDTH = 800, 800
 STEP = 50
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption('Перемещение героя')
+pygame.display.set_caption('CRAZY HARE')
 clock = pygame.time.Clock()
 FPS = 50
+run = False
 
 
 def load_image(name, colorkey=None):
@@ -260,26 +261,6 @@ def get_coords(level):
                 return int(x), int(y)
 
 
-# def game_over():
-#     size = HEIGHT, WIDTH = 800, 800
-#     screen = pygame.display.set_mode(size)
-#     pygame.display.set_caption('Перемещение героя')
-#     clock = pygame.time.Clock()
-#     FPS = 50
-#     screen.fill((0, 0, 0))
-#     font = pygame.font.Font(None, 100)
-#     text = font.render("GAME OVER", True, (136, 231, 252))
-#     text_x = WIDTH // 2 - text.get_width() // 2
-#     text_y = HEIGHT // 2 - text.get_height() // 2
-#     text_w = text.get_width()
-#     text_h = text.get_height()
-#     screen.blit(text, (text_x, text_y))
-#     pygame.draw.rect(screen, (136, 231, 252), (text_x - 10, text_y - 10,
-#                                                text_w + 20, text_h + 20), 10)
-#     pygame.display.flip()
-#     clock.tick(FPS)
-
-
 def moving(direction, level, x, y, col_key):
     crossing_lock = pygame.sprite.spritecollide(player, lock_group, False, pygame.sprite.collide_circle)
     logic = True
@@ -318,7 +299,7 @@ def moving(direction, level, x, y, col_key):
     return logic
 
 
-leval = 'leval_8.txt'
+leval = 'leval_29.txt'
 level = load_level(leval)
 player, level_x, level_y = generate_level(level)
 col = level_carrot[leval]
@@ -366,6 +347,7 @@ while running:
     draw_col(str(col), HEIGHT)
     if crossing_ship:
         running = False
+        run = True
     if crossing_key:
         col_key += 1
     if col_key >= 1:
@@ -375,27 +357,35 @@ while running:
 
     pygame.display.flip()
     clock.tick(FPS)
-
-run = True
+size = HEIGHT, WIDTH = 800, 800
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption('CRAZY HARE')
+clock = pygame.time.Clock()
+FPS = 50
+screen.fill((0, 0, 0))
 while run:
-    size = HEIGHT, WIDTH = 800, 800
-    screen = pygame.display.set_mode(size)
-    pygame.display.set_caption('Перемещение героя')
-    clock = pygame.time.Clock()
-    FPS = 50
-    screen.fill((0, 0, 0))
-    font = pygame.font.Font(None, 100)
-    text = font.render("GAME OVER", True, (136, 231, 252))
-    text_x = WIDTH // 2 - text.get_width() // 2
-    text_y = HEIGHT // 2 - text.get_height() // 2
-    text_w = text.get_width()
-    text_h = text.get_height()
-    screen.blit(text, (text_x, text_y))
-    pygame.draw.rect(screen, (136, 231, 252), (text_x - 10, text_y - 10,
-                                           text_w + 20, text_h + 20), 10)
     for event in pygame.event.get():
+        font = pygame.font.Font(None, 100)
+        font_res = pygame.font.Font(None, 75)
+        text = font.render("GAME OVER", True, (136, 231, 252))
+        text_x = WIDTH // 2 - text.get_width() // 2
+        text_y = HEIGHT // 2 - text.get_height() // 2
+        text_w = text.get_width()
+        text_h = text.get_height()
+        screen.blit(text, (text_x, text_y))
+        pygame.draw.rect(screen, (136, 231, 252), (text_x - 10, text_y - 10,
+                                                   text_w + 20, text_h + 20), 10)
+        text_res = font_res.render('RESTART', True, (136, 231, 252))
+        text_res_x = WIDTH // 1.5 - text.get_width() // 1.7
+        text_res_y = HEIGHT // 1.5 - text.get_height() // 3
+        screen.blit(text_res, (text_res_x, text_res_y))
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.MOUSEBUTTONUP:
+            x, y = event.pos
+            if x >= 286 and x <= 523 and y >= 511 and y <= 562:
+                run = False
+                running = True
     pygame.display.flip()
     clock.tick(FPS)
 terminate()
