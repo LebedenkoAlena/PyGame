@@ -69,9 +69,21 @@ class Game():
             'leval_29.txt': 15,
             'leval_30.txt': 10,
         }
-        leval = 'leval_18.txt'
-        self.col = level_carrot[leval]
+        self.leval = 'leval_18.txt'
+        self.col = level_carrot[self.leval]
         self.clock = pygame.time.Clock()
+        self.tile_width = self.tile_height = 50
+        # основной персонаж
+        self.player = None
+
+        # # группы спрайтов
+        self.all_sprites = pygame.sprite.Group()
+        self.tiles_group = pygame.sprite.Group()
+        # self.key_group = pygame.sprite.Group()
+        # self.lock_group = pygame.sprite.Group()
+        # self.player_group = pygame.sprite.Group()
+        # self.carrot_group = pygame.sprite.Group()
+        # self.ship_group = pygame.sprite.Group()
 
     def loop(self, window):
         for event in pygame.event.get():
@@ -81,9 +93,17 @@ class Game():
                 self.x = event.pos
                 self.x_pos = 0
         self.screen.blit(self.fon, (0, 0))
+        self.tiles_group.draw(self.screen)
+        # self.player_group.draw(self.screen)
+        # self.carrot_group.draw(self.screen)
+        # self.key_group.draw(self.screen)
+        # self.ship_group.draw(self.screen)
+        # self.lock_group.draw(self.screen)
         self.draw_lives(self.screen, self.WIDTH - 50, 5,
                         self.shetchik)
         self.draw_col(str(self.col), self.WIDTH)
+        # self.player, self.level_x, self.level_y =
+        self.generate_level(self.level)
         if self.x != 1:
             pygame.draw.circle(self.screen, (255, 255, 0), self.x, self.x_pos)
             self.x_pos += self.v * self.clock.tick() / 1000
@@ -120,77 +140,118 @@ class Game():
         else:
             self.screen.blit(text, (h - 130, 5))
 
-    def generate_level(level):
+    def generate_level(self, level):
+        self.tile = Tile
         new_player, x, y = None, None, None
         for y in range(len(level)):
             for x in range(len(level[y])):
                 if level[y][x] == '.':
-                    Tile('earth', x, y)
-                elif level[y][x] == '#':
-                    Tile('box', x, y)
-                elif level[y][x] == '@':
-                    Tile('earth', x, y)
-                    new_player = Player(x, y)
-                elif level[y][x] == '$':
-                    Tile('earth', x, y)
-                    Tile('end', x, y)
-                elif level[y][x] == 'm':
-                    Tile('earth', x, y)
-                    Carrot(x, y)
-                elif level[y][x] == '/':
-                    Tile('trap', x, y)
-                elif level[y][x] == '<':
-                    Tile('earth', x, y)
-                    Tile('arrow_l', x, y)
-                elif level[y][x] == '>':
-                    Tile('earth', x, y)
-                    Tile('arrow_r', x, y)
-                elif level[y][x] == '(':
-                    Tile('earth', x, y)
-                    Tile('arrow_b', x, y)
-                elif level[y][x] == ')':
-                    Tile('earth', x, y)
-                    Tile('arrow_t', x, y)
-                elif level[y][x] == '-':
-                    Tile('earth', x, y)
-                    Tile('most=', x, y)
-                elif level[y][x] == '*':
-                    Tile('earth', x, y)
-                    Tile('most', x, y)
-                elif level[y][x] == '1':
-                    Tile('earth', x, y)
-                    Tile('1', x, y)
-                elif level[y][x] == '2':
-                    Tile('earth', x, y)
-                    Tile('2', x, y)
-                elif level[y][x] == '3':
-                    Tile('earth', x, y)
-                    Tile('3', x, y)
-                elif level[y][x] == '4':
-                    Tile('earth', x, y)
-                    Tile('4', x, y)
-                elif level[y][x] == '8':
-                    Tile('earth', x, y)
-                    Tile('button_no', x, y)
-                elif level[y][x] == '5':
-                    Tile('earth', x, y)
-                    Tile('button_yes', x, y)
-                elif level[y][x] == '%':
-                    Tile('earth', x, y)
-                    Lock(x, y)
-                elif level[y][x] == '!':
-                    Tile('earth', x, y)
-                    Key(x, y)
-        # вернем игрока, а также размер поля в клетках
+                    self.tile('earth', x, y)
+        #         elif level[y][x] == '#':
+        #             Tile('box', x, y)
+        #         elif level[y][x] == '@':
+        #             Tile('earth', x, y)
+        #             new_player = Player(x, y)
+        #         elif level[y][x] == '$':
+        #             Tile('earth', x, y)
+        #             Tile('end', x, y)
+        #         elif level[y][x] == 'm':
+        #             Tile('earth', x, y)
+        #             Carrot(x, y)
+        #         elif level[y][x] == '/':
+        #             Tile('trap', x, y)
+        #         elif level[y][x] == '<':
+        #             Tile('earth', x, y)
+        #             Tile('arrow_l', x, y)
+        #         elif level[y][x] == '>':
+        #             Tile('earth', x, y)
+        #             Tile('arrow_r', x, y)
+        #         elif level[y][x] == '(':
+        #             Tile('earth', x, y)
+        #             Tile('arrow_b', x, y)
+        #         elif level[y][x] == ')':
+        #             Tile('earth', x, y)
+        #             Tile('arrow_t', x, y)
+        #         elif level[y][x] == '-':
+        #             Tile('earth', x, y)
+        #             Tile('most=', x, y)
+        #         elif level[y][x] == '*':
+        #             Tile('earth', x, y)
+        #             Tile('most', x, y)
+        #         elif level[y][x] == '1':
+        #             Tile('earth', x, y)
+        #             Tile('1', x, y)
+        #         elif level[y][x] == '2':
+        #             Tile('earth', x, y)
+        #             Tile('2', x, y)
+        #         elif level[y][x] == '3':
+        #             Tile('earth', x, y)
+        #             Tile('3', x, y)
+        #         elif level[y][x] == '4':
+        #             Tile('earth', x, y)
+        #             Tile('4', x, y)
+        #         elif level[y][x] == '8':
+        #             Tile('earth', x, y)
+        #             Tile('button_no', x, y)
+        #         elif level[y][x] == '5':
+        #             Tile('earth', x, y)
+        #             Tile('button_yes', x, y)
+        #         elif level[y][x] == '%':
+        #             Tile('earth', x, y)
+        #             Lock(x, y)
+        #         elif level[y][x] == '!':
+        #             Tile('earth', x, y)
+        #             Key(x, y)
+        # # вернем игрока, а также размер поля в клетках
         return new_player, x, y
 
 
-class Tile(pygame.sprite.Sprite, Game):
+class Tile(pygame.sprite.Sprite):
     def __init__(self, tile_type, pos_x, pos_y):
         super().__init__(self.tiles_group, self.all_sprites)
         self.image = self.tile_images[tile_type]
         self.rect = self.image.get_rect().move(
             self.tile_width * pos_x, self.tile_height * pos_y)
 
-
-
+#
+# class Player(pygame.sprite.Sprite):
+#     def __init__(self, pos_x, pos_y):
+#         super().__init__(self.player_group, self.all_sprites)
+#         self.image = self.player_image
+#         self.rect = self.image.get_rect().move(
+#             self.tile_width * pos_x - 14, self.tile_height * pos_y - 25)
+#         self.radius = 5
+#
+#
+# class Carrot(pygame.sprite.Sprite):
+#     def __init__(self, pos_x, pos_y):
+#         super().__init__(self.carrot_group, self.all_sprites)
+#         self.image = self.carrot_image
+#         self.rect = self.image.get_rect().move(
+#             self.tile_width * pos_x, self.tile_height * pos_y)
+#
+#
+# class Key(pygame.sprite.Sprite):
+#     def __init__(self, pos_x, pos_y):
+#         super().__init__(self.key_group, self.all_sprites)
+#         self.image = self.key_image
+#         self.rect = self.image.get_rect().move(
+#             self.tile_width * pos_x, self.tile_height * pos_y)
+#
+#
+# class Lock(pygame.sprite.Sprite):
+#     def __init__(self, pos_x, pos_y):
+#         super().__init__(self.lock_group, self.all_sprites)
+#         self.image = self.lock_image
+#         self.rect = self.image.get_rect().move(
+#             self.tile_width * pos_x, self.tile_height * pos_y)
+#         self.radius = 25
+#
+#
+# class Ship(pygame.sprite.Sprite):
+#     def __init__(self, pos_x, pos_y):
+#         super().__init__(self.ship_group, self.all_sprites)
+#         self.image = self.ship_image
+#         self.rect = self.image.get_rect().move(
+#             self.tile_width * pos_x, self.tile_height * pos_y)
+#         self.radius = 25

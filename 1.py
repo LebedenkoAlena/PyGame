@@ -147,7 +147,7 @@ class Lock(pygame.sprite.Sprite):
         self.image = lock_image
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
-        self.radius = 25
+        self.radius = 50
 
 
 class Ship(pygame.sprite.Sprite):
@@ -260,7 +260,13 @@ def get_coords(level):
                 return int(x), int(y)
 
 
-def game_over(screen):
+def game_over():
+    size = HEIGHT, WIDTH = 800, 800
+    STEP = 50
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption('Перемещение героя')
+    clock = pygame.time.Clock()
+    FPS = 50
     screen.fill((0, 0, 0))
     font = pygame.font.Font(None, 100)
     text = font.render("GAME OVER", True, (136, 231, 252))
@@ -301,15 +307,14 @@ def moving(direction, level, x, y, col_key):
         logic = False
     elif level[y][x] == '/':
         Ship(x, y)
-    elif direction == 'right' and crossing_lock and col_key < 1 \
-            or direction == 'left' and crossing_lock and col_key < 1 \
-            or direction == 'down' and crossing_lock and col_key < 1 \
-            or direction == 'up' and crossing_lock and col_key < 1:
-        logic = False
+    elif crossing_lock and col_key == 0:
+        if direction == 'right' and level[y][x + 1] == '%' \
+                or direction == 'left' and level[y][x - 1] == '%'\
+                or direction == 'down' and level[y + 1][x] == '%'\
+                or direction == 'up' and level[y - 1][x] == '%':
+            logic = False
 
     return logic
-
-
 
 
 leval = 'leval_18.txt'
@@ -317,7 +322,6 @@ level = load_level(leval)
 player, level_x, level_y = generate_level(level)
 col = level_carrot[leval]
 col_key = 0
-
 
 running = True
 x, y = get_coords(level)
@@ -360,7 +364,7 @@ while running:
         col -= 1
     draw_col(str(col), HEIGHT)
     if crossing_ship:
-        game_over(screen)
+        game_over()
     if crossing_key:
         col_key += 1
     if col_key >= 1:
