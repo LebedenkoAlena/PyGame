@@ -4,62 +4,37 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import QTimer
 from PyQt5 import QtGui, QtCore
 from un import Ui_mainWindow
-from Tile import Game
+
+level_location = 'leval_1.txt'
+numder = 0
 
 
 class Generate(QMainWindow, Ui_mainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.pushButton_1.clicked.connect(self.bt)
-        self.pushButton_2.clicked.connect(self.bt)
-        self.pushButton_3.clicked.connect(self.bt)
-        self.pushButton_4.clicked.connect(self.bt)
-        self.pushButton_5.clicked.connect(self.bt)
-        self.pushButton_6.clicked.connect(self.bt)
-        self.pushButton_7.clicked.connect(self.bt)
-        self.pushButton_8.clicked.connect(self.bt)
-        self.pushButton_9.clicked.connect(self.bt)
-        self.pushButton_10.clicked.connect(self.bt)
-        self.pushButton_11.clicked.connect(self.bt)
-        self.pushButton_12.clicked.connect(self.bt)
-        self.pushButton_13.clicked.connect(self.bt)
-        self.pushButton_14.clicked.connect(self.bt)
-        self.pushButton_15.clicked.connect(self.bt)
-        self.pushButton_16.clicked.connect(self.bt)
-        self.pushButton_17.clicked.connect(self.bt)
-        self.pushButton_18.clicked.connect(self.bt)
-        self.pushButton_19.clicked.connect(self.bt)
-        self.pushButton_20.clicked.connect(self.bt)
-        self.pushButton_21.clicked.connect(self.bt)
-        self.pushButton_22.clicked.connect(self.bt)
-        self.pushButton_23.clicked.connect(self.bt)
-        self.pushButton_24.clicked.connect(self.bt)
-        self.pushButton_25.clicked.connect(self.bt)
-        self.pushButton_26.clicked.connect(self.bt)
-        self.pushButton_27.clicked.connect(self.bt)
-        self.pushButton_28.clicked.connect(self.bt)
-        self.pushButton_29.clicked.connect(self.bt)
-        self.pushButton_30.clicked.connect(self.run)
+        # чтение файла с максимальным пройденным уровнем
+        with open('levels_unblock.txt', mode='r') as block:
+            levels = list(map(int, block.read().split()))
+        # объявление кнопок и их функций
+        for i in range(1, 17):
+            if len(levels) == 0:
+                self.pushButton_1.clicked.connect(self.bt)
+            elif i <= levels[-1] + 1:
+                exec(f'self.pushButton_{i}.clicked.connect(self.bt)')
+            else:
+                exec(f'self.pushButton_{i}.setEnabled(False)')
 
-
-    def run(self):
-        self.init_pygame()
-
+    # изменение значений глобальных переменных и закрытие  Qt-окна
     def bt(self):
-        print(self.sender().text())
+        global level_location, numder
+        numder = self.sender().text()
+        level_location = f'leval_{self.sender().text()}.txt'
+        self.close()
 
-    def init_pygame(self):
-        self.game = Game()
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.pygame_loop)
-        self.timer.start(10)
-
-    def pygame_loop(self):
-        if self.game.loop(self):
-            self.timer.stop()
-            self.timer.disconnect()
-            pygame.quit()
+# функция возвращения значений (для использования их в основном игровом цикле)
+def returning():
+    return level_location, int(numder)
 
 
 if __name__ == '__main__':
