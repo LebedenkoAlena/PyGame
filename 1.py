@@ -2,13 +2,18 @@ import pygame, os, sys
 
 pygame.init()
 
+pygame.init()
+leval = 'leval_1.txt'
+with open(fr'data/{leval}', mode='r') as txt:
+    text = txt.read().split()
+    size = WIDTH, HEIGHT = len(text) * 50, len(text[0]) * 50
 all_sprites = pygame.sprite.Group()
-size = HEIGHT, WIDTH = 800, 800
 STEP = 50
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption('Перемещение героя')
+pygame.display.set_caption('CRAZY HARE')
 clock = pygame.time.Clock()
 FPS = 50
+run = False
 
 
 def load_image(name, colorkey=None):
@@ -147,7 +152,7 @@ class Lock(pygame.sprite.Sprite):
         self.image = lock_image
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
-        self.radius = 25
+        self.radius = 50
 
 
 class Ship(pygame.sprite.Sprite):
@@ -310,7 +315,61 @@ def moving(direction, level, x, y, col_key):
             or direction == 'down' and crossing_lock and col_key < 1 \
             or direction == 'up' and crossing_lock and col_key < 1:
         logic = False
-
+    elif direction == 'right' and text[y][x + 1] == '*' \
+            or direction == 'left' and text[y][x - 1] == '*' \
+            or direction == 'down' and text[y + 1][x] == '-' \
+            or direction == 'up' and text[y - 1][x] == '-':
+        logic = False
+    elif direction == 'right' and text[y][x] == '*' \
+            or direction == 'left' and text[y][x] == '*':
+        logic = False
+    elif direction == 'down' and text[y][x] == '-' \
+            or direction == 'up' and text[y][x] == '-':
+        logic = False
+    elif direction == 'left' and text[y][x] == '1' \
+            or direction == 'down' and text[y][x] == '1' \
+            or direction == 'right' and text[y][x + 1] == '1' \
+            or direction == 'up' and text[y - 1][x] == '1':
+        logic = False
+    elif direction == 'left' and text[y][x] == '2' \
+            or direction == 'up' and text[y][x] == '2' \
+            or direction == 'right' and text[y][x + 1] == '2' \
+            or direction == 'down' and text[y + 1][x] == '2':
+        logic = False
+    elif direction == 'right' and text[y][x] == '3' \
+            or direction == 'up' and text[y][x] == '3' \
+            or direction == 'left' and text[y][x - 1] == '3' \
+            or direction == 'down' and text[y + 1][x] == '3':
+        logic = False
+    elif direction == 'right' and text[y][x] == '4' \
+            or direction == 'down' and text[y][x] == '4' \
+            or direction == 'left' and text[y][x - 1] == '4' \
+            or direction == 'up' and text[y - 1][x] == '4':
+        logic = False
+    if text[y][x] == '*' and logic == True:
+        text[y][x] = '-'
+        Tile('earth', x, y)
+        Tile('most=', x, y)
+    elif text[y][x] == '-' and logic == True:
+        text[y][x] = '*'
+        Tile('earth', x, y)
+        Tile('most', x, y)
+    elif text[y][x] == '1' and logic == True:
+        text[y][x] = '2'
+        Tile('earth', x, y)
+        Tile('2', x, y)
+    elif text[y][x] == '2' and logic == True:
+        text[y][x] = '3'
+        Tile('earth', x, y)
+        Tile('3', x, y)
+    elif text[y][x] == '3' and logic == True:
+        text[y][x] = '4'
+        Tile('earth', x, y)
+        Tile('4', x, y)
+    elif text[y][x] == '4' and logic == True:
+        text[y][x] = '1'
+        Tile('earth', x, y)
+        Tile('1', x, y)
     return logic
 
 
@@ -338,13 +397,14 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.image = self.frames[self.cur_frame]
 
 
-leval = 'leval_2.txt'
+
 level = load_level(leval)
 player, level_x, level_y = generate_level(level)
 col = level_carrot[leval]
 col_key = 0
 
 target = AnimatedSprite(load_image("animation.png"), 2, 1, coords(get_coords(level, '$')))
+
 fullname = os.path.join('data', "music.ogg")
 filepath = os.path.abspath(__file__)
 filedir = os.path.dirname(filepath)
@@ -353,6 +413,26 @@ pygame.mixer.music.load(musicpath)
 pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.play(loops=-1)
 
+carrot_sound_name = os.path.join('data', "carrot_music.mp3")
+carrot_sound = pygame.mixer.Sound(os.path.join(filedir, carrot_sound_name))
+
+lock_sound_name = os.path.join('data', "lock_sound.mp3")
+lock_sound = pygame.mixer.Sound(os.path.join(filedir, lock_sound_name))
+
+key_sound_name = os.path.join('data', "key_sound.mp3")
+key_sound = pygame.mixer.Sound(os.path.join(filedir, key_sound_name))
+
+deatn_sound_name = os.path.join('data', "death_sound.mp3")
+death_sound = pygame.mixer.Sound(os.path.join(filedir, deatn_sound_name))
+
+with open(fr'data/{leval}', mode='r') as txt:
+    text_help = txt.read().split()
+text = list([]*len(text_help))
+for i in range(len(text_help)):
+    spisok = []
+    for j in range(len(text_help[0])):
+        spisok.append(text_help[i][j])
+    text.append(spisok)
 running = True
 x, y = get_coords(level, '@')
 while running:
@@ -379,11 +459,11 @@ while running:
     fon = pygame.transform.scale(load_image('grass.jpg'), (WIDTH, HEIGHT))
     screen.blit(fon, (0, 0))
     tiles_group.draw(screen)
-    player_group.draw(screen)
     carrot_group.draw(screen)
     key_group.draw(screen)
     ship_group.draw(screen)
     lock_group.draw(screen)
+    player_group.draw(screen)
     draw_lives(screen, WIDTH - 50, 5,
                shetchik)
 
@@ -392,15 +472,22 @@ while running:
     crossing_key = pygame.sprite.spritecollide(player, key_group, True, pygame.sprite.collide_circle)
     if crossing_carrot:
         col -= 1
-    draw_col(str(col), HEIGHT)
+        carrot_sound.play()
+    draw_col(str(col), WIDTH)
     if crossing_ship:
-        game_over(screen)
+        pygame.mixer.music.stop()
+        death_sound.play()
+        running = False
+        run = True
+
     if crossing_key:
         col_key += 1
+        key_sound.play()
     if col_key >= 1:
         crossing_lock = pygame.sprite.spritecollide(player, lock_group, True, pygame.sprite.collide_circle)
         if crossing_lock:
             col_key -= 1
+            lock_sound.play()
     if col == 0:
         all_sprites.draw(screen)
         target.update()
@@ -408,4 +495,34 @@ while running:
     pygame.display.flip()
     clock.tick(FPS)
 
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption('CRAZY HARE')
+clock = pygame.time.Clock()
+FPS = 50
+screen.fill((0, 0, 0))
+while run:
+    for event in pygame.event.get():
+        font = pygame.font.Font(None, 100)
+        font_res = pygame.font.Font(None, 75)
+        text = font.render("GAME OVER", True, (136, 231, 252))
+        text_x = WIDTH // 2 - text.get_width() // 2
+        text_y = HEIGHT // 2 - text.get_height() // 2
+        text_w = text.get_width()
+        text_h = text.get_height()
+        screen.blit(text, (text_x, text_y))
+        pygame.draw.rect(screen, (136, 231, 252), (text_x - 10, text_y - 10,
+                                                   text_w + 20, text_h + 20), 10)
+        text_res = font_res.render('RESTART', True, (136, 231, 252))
+        text_res_x = WIDTH // 1.5 - text.get_width() // 1.7
+        text_res_y = HEIGHT // 1.5 - text.get_height() // 3
+        screen.blit(text_res, (text_res_x, text_res_y))
+        if event.type == pygame.QUIT:
+            run = False
+        if event.type == pygame.MOUSEBUTTONUP:
+            x, y = event.pos
+            if x >= 286 and x <= 523 and y >= 511 and y <= 562:
+                pygame.quit()
+                os.system('1.py')
+    pygame.display.flip()
+    clock.tick(FPS)
 terminate()
