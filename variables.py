@@ -213,6 +213,7 @@ carrot_image = load_image('carrot.png')
 key_image = load_image('key.png')
 lock_image = load_image('lock.png')
 shetchik = load_image('shetchik1.png')
+res = load_image('restart.png')
 ship_image = load_image('ship.png')
 end_image = load_image('end.png')
 tile_width = tile_height = 50

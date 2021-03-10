@@ -1,6 +1,7 @@
-from level import returning, Generate
 from PyQt5.QtWidgets import QApplication, QMainWindow
+
 from functions import *
+from level import returning, Generate
 
 # инициализация pygame
 pygame.init()
@@ -19,6 +20,7 @@ def start_screen():
                 return True
         pygame.display.flip()
         clock.tick(FPS)
+
 
 # проверка возможности передвижения
 def moving(direction, level, x, y, col_key):
@@ -112,6 +114,7 @@ def moving(direction, level, x, y, col_key):
         Tile('1', x, y)
     return logic
 
+
 # класс, реализующий анимацию мишени
 class AnimatedSprite(pygame.sprite.Sprite):
     def __init__(self, sheet, columns, rows, *args):
@@ -135,6 +138,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
     def update(self):
         self.cur_frame = (self.cur_frame + 1) % len(self.frames)
         self.image = self.frames[self.cur_frame]
+
 
 # открытие Qt-окна
 if start_screen():
@@ -185,6 +189,13 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONUP:
+            a, b = event.pos
+            if a <= 50 and b <= 50:
+                running = False
+                pygame.mixer.music.stop()
+                death_sound.play()
+                run = True
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 if moving('left', level, x, y, col_key):
@@ -212,6 +223,7 @@ while running:
     player_group.draw(screen)
     draw_lives(screen, WIDTH - 50, 5,
                shetchik)
+    restart(screen, res)
     if get_coords(level, '$')[0] == x and get_coords(level, '$')[1] == y:
         crossing_target = True
     else:
@@ -265,15 +277,15 @@ while running:
                             terminate()
                         elif event.type == pygame.KEYDOWN or \
                                 event.type == pygame.MOUSEBUTTONDOWN:
-                            with open('levels_unblock.txt','w') as level_zero:
+                            with open('levels_unblock.txt', 'w') as level_zero:
                                 level_zero.write(' ')
                             pygame.quit()
                             os.system('main.py')
 
                     pygame.display.flip()
                     clock.tick(FPS)
-                # pygame.display.flip()
-                # clock.tick(FPS)
+                pygame.display.flip()
+                clock.tick(FPS)
             else:
                 pygame.quit()
                 os.system('main.py')
@@ -281,6 +293,7 @@ while running:
     clock.tick(FPS)
 
 # пересоздание окна
+size = WIDTH, HEIGHT = 600, 600
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('CRAZY RABBIT')
 clock = pygame.time.Clock()
@@ -300,15 +313,17 @@ while run:
         pygame.draw.rect(screen, (136, 231, 252), (text_x - 10, text_y - 10,
                                                    text_w + 20, text_h + 20), 10)
         text_res = font_res.render('RESTART', True, (136, 231, 252))
-        text_res_x = WIDTH // 1.5 - text.get_width() // 1.7
-        text_res_y = HEIGHT // 1.5 - text.get_height() // 3
+        text_res_x = WIDTH // 2 - text.get_width() // 3
+        text_res_y = HEIGHT // 2 + text.get_height()
         screen.blit(text_res, (text_res_x, text_res_y))
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONUP:
-            # возможность рестарта
-            pygame.quit()
-            os.system('main.py')
+            x, y = event.pos
+            if x >= text_res_x and y >= text_res_y and x <= 400 and y <= 420:
+                #возможность рестарта
+                pygame.quit()
+                os.system('main.py')
     pygame.display.flip()
     clock.tick(FPS)
 terminate()

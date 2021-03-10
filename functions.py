@@ -25,3 +25,9 @@ def draw_col(col, h):
 # функция для работы с координатами на поле
 def coords(*args):
     return tile_width * args[0][0], tile_height * args[0][1]
+
+def restart(surf, img):
+    img_rect = img.get_rect()
+    img_rect.x = 5
+    img_rect.y = 5
+    surf.blit(img, img_rect)
